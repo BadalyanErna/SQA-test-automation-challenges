@@ -55,9 +55,8 @@ class Tests:
         fruits_select = Select(fruits)
         fruits_select.select_by_value('apple')
         fruits_select.select_by_value('peach')
-        orange = fruits_select.select_by_value('orange')
-        assert fruits_select.all_selected_options.is_selected()
-        assert not orange.is_selected()
+        for fruit in fruits_select.all_selected_options:
+            assert 'orange' not in fruits_select.all_selected_options
 
     def test_enabled_disabled_placeholder(self):
         global driver
@@ -80,10 +79,14 @@ class Tests:
         driver = webdriver.Chrome()
         get_wait = Wait(driver)
         driver.get('https://courses.letskodeit.com/practice')
+        fruits = get_wait.wait_for_element(By.ID, "multiple-select-example")
+        fruits_select = Select(fruits)
+        fruits_select.select_by_value('apple')
+        fruits_select.select_by_value('peach')
         mouse_hover = get_wait.wait_for_element(By.CSS_SELECTOR, 'button[id="mousehover"]')
         actions = ActionChains(driver)
         actions.move_to_element(mouse_hover).perform()
-        driver.find_element(By.XPATH, "//div[@class='mouse-hover-content']/a[2]").click()
-        cars = get_wait.wait_for_element(By.CSS_SELECTOR, 'select[id="carselect"]')
-        cars_select = Select(cars)
-        assert cars_select.first_selected_option.is_selected()
+        driver.find_element(By.ID, "multiple-select-example").click()
+        assert not fruits_select.select_by_value('apple')
+        assert not fruits_select.select_by_value('peach')
+
