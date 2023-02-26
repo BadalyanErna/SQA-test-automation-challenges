@@ -1,23 +1,23 @@
-import time
-
+import pytest
 from selenium import webdriver
 from selenium.common import NoSuchElementException
 from selenium.webdriver.common.by import By
 from waits import Wait
+from waits import get_driver
 
 driver = webdriver.Chrome()
 
 
-def browser_navigation():
-    # Keep drivers in PATH
-    global driver
-    driver.get("https://www.demoblaze.com/")
-
-
-
 class Tests:
 
-    def second_task_locate_elements_on_webpage(self):
+    def test_first_task_open_website_one_edge_and_firefox(self):
+        edge_driver = get_driver('Edge')
+        firefox_driver = get_driver('Firefox')
+        edge_driver.get('https://www.demoblaze.com/')
+        firefox_driver.get('https://www.demoblaze.com/')
+        firefox_driver.close()
+
+    def test_second_task_locate_elements_on_webpage(self):
         global driver
         driver.get("https://www.demoblaze.com/")
         self.get_wait = Wait(driver)
@@ -57,10 +57,11 @@ class Tests:
         except NoSuchElementException:
             print("No Such Element")
 
-    def third_task_categories_elements(self):
+    def test_third_task_categories_elements(self):
         global driver
+        self.get_wait = Wait(driver)
         try:
-            self.get_wait.wait_for_element(By.XPATH, '#itemc[onclick="byCat(\'phone\')"]')
+            self.get_wait.wait_for_element(By.CSS_SELECTOR, '#itemc[onclick="byCat(\'phone\')"]')
             print("Element is located")
         except NoSuchElementException:
             print("No Such Element")
@@ -75,35 +76,18 @@ class Tests:
         except NoSuchElementException:
             print("No Such Element")
 
-    def fourth_task_highest_price_phone(self):
-        global driver
-        phones = self.get_wait.wait_for_element(By.XPATH, '//a[@onclick="byCat(\'phone\')"]')
-        phones.click()
-        self.get_wait.wait_for_element(By.XPATH, '//div[@class="card h-100"]')
-        phones_name_and_price = {}
-
-        # iterating over the list of phones and extracting their name and price
-        for phone in phones:
-            nameElements = phone.find_element(By.CLASS_NAME, 'hrefch')
-            name = nameElements.text
-            priceElement = phone.find_element(By.TAG_NAME, "h5")
-            price = int(priceElement.text[1:])
-            phones_name_and_price[name] = price
-        print(phones_name_and_price)
-
-        # defining a function to get phone's price using its name
-        def get_price_of_phone(phone_name):
-            return phones_name_and_price[phone_name]
-
-        # finding the phone with the highest price
-        max_key = max(phones_name_and_price, key=get_price_of_phone)
-        max_value = phones_name_and_price[max_key]
-        print(f"The highest phone is {max_key} and the price is ${max_value}")
-
     def test_categories_section(self):
-        global driver
-        phones = self.get_wait.wait_for_element(By.XPATH, '//a[@onclick="byCat(\'phone\')"]')
-        phones.click()
-        assert self.get_wait.wait_for_element(By.XPATH, '//div[@id="tbodyid"]').is_displayed()
 
-        laptops = self.get_wait.wait_for_el
+        global driver
+        get_wait = Wait(driver)
+        phones = get_wait.wait_for_element(By.XPATH, '//a[@onclick="byCat(\'phone\')"]')
+        phones.click()
+        assert get_wait.wait_for_element(By.XPATH, '//div[@id="tbodyid"]').is_displayed()
+
+        laptops = driver.find_element(By.XPATH, '//a[@onclick="byCat(\'notebook\')"]')
+        laptops.click()
+        assert get_wait.wait_for_element(By.XPATH, '//div[@id="tbodyid"]').is_displayed()
+
+        monitors = driver.find_element(By.XPATH, '//a[@onclick="byCat(\'monitor\')"]')
+        monitors.click()
+        assert get_wait.wait_for_element(By.XPATH, '//div[@id="tbodyid"]').is_displayed()

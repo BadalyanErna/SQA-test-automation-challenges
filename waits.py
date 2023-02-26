@@ -1,8 +1,22 @@
 from selenium.common import NoSuchElementException
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as condition
-
+from selenium import webdriver
 from get_by import get_by_type
+
+
+def get_driver(browser_name):
+    supported_browsers = ["chrome", "firefox", "edge"]
+
+    if browser_name.lower() not in supported_browsers:
+        raise ValueError("Unsupported browser: {}".format(browser_name))
+
+    if browser_name.lower() == "chrome":
+        return webdriver.Chrome()
+    elif browser_name.lower() == "firefox":
+        return webdriver.Firefox()
+    elif browser_name.lower() == "edge":
+        return webdriver.Edge()
 
 
 class Wait:
