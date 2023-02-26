@@ -4,7 +4,6 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.select import Select
 
 from waits import Wait
-import pytest
 
 driver = webdriver.Chrome()
 
@@ -47,6 +46,35 @@ class Tests:
         cars_select.select_by_value('honda')
         assert cars_select.first_selected_option.is_selected()
 
+    def test_multi_select(self):
+        global driver
+        driver = webdriver.Chrome()
+        get_wait = Wait(driver)
+        driver.get('https://courses.letskodeit.com/practice')
+        fruits = get_wait.wait_for_element(By.ID, "multiple-select-example")
+        fruits_select = Select(fruits)
+        fruits_select.select_by_value('apple')
+        fruits_select.select_by_value('peach')
+        orange = fruits_select.select_by_value('orange')
+        assert fruits_select.all_selected_options.is_selected()
+        assert not orange.is_selected()
+
+    def test_enabled_disabled_placeholder(self):
+        global driver
+        driver = webdriver.Chrome()
+        get_wait = Wait(driver)
+        driver.get('https://courses.letskodeit.com/practice')
+        enabled_button = get_wait.wait_for_element(By.CSS_SELECTOR, 'input#enabled-button')
+        enabled_button.click()
+        assert enabled_button.is_enabled()
+
+        driver.find_element(By.CSS_SELECTOR, "input#enabled-example-input").send_keys('Hello')
+        disabled = driver.find_element(By.CSS_SELECTOR, 'input#disabled-button')
+        disabled.click()
+        disabled_placeholder_element = driver.find_element(By.CSS_SELECTOR,
+                                                           'input[placeholder="Enabled/Disabled Field"][disabled]')
+        assert not disabled_placeholder_element.is_enabled()
+
     def test_hover_reload(self):
         global driver
         driver = webdriver.Chrome()
@@ -59,6 +87,3 @@ class Tests:
         cars = get_wait.wait_for_element(By.CSS_SELECTOR, 'select[id="carselect"]')
         cars_select = Select(cars)
         assert cars_select.first_selected_option.is_selected()
-
-
-

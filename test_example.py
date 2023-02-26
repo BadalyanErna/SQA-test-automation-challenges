@@ -1,7 +1,7 @@
-import pytest
 from selenium import webdriver
 from selenium.common import NoSuchElementException
 from selenium.webdriver.common.by import By
+
 from waits import Wait
 from waits import get_driver
 
@@ -20,10 +20,10 @@ class Tests:
     def test_second_task_locate_elements_on_webpage(self):
         global driver
         driver.get("https://www.demoblaze.com/")
-        self.get_wait = Wait(driver)
+        get_wait = Wait(driver)
 
         try:
-            self.get_wait.wait_for_element(By.XPATH, '//a[@class="nav-link"][@href="index.html"]')
+            get_wait.wait_for_element(By.XPATH, '//a[@class="nav-link"][@href="index.html"]')
             print("Home element is located")
         except NoSuchElementException:
             print("No Such Element")
@@ -59,9 +59,9 @@ class Tests:
 
     def test_third_task_categories_elements(self):
         global driver
-        self.get_wait = Wait(driver)
+        get_wait = Wait(driver)
         try:
-            self.get_wait.wait_for_element(By.CSS_SELECTOR, '#itemc[onclick="byCat(\'phone\')"]')
+            get_wait.wait_for_element(By.CSS_SELECTOR, '#itemc[onclick="byCat(\'phone\')"]')
             print("Element is located")
         except NoSuchElementException:
             print("No Such Element")
