@@ -14,13 +14,13 @@ class Tests:
         edge_driver = get_driver('Edge')
         firefox_driver = get_driver('Firefox')
         edge_driver.get('https://www.demoblaze.com/')
-        firefox_driver.get('https://www.demoblaze.com/')
+        # firefox_driver.get('https://www.demoblaze.com/')
         firefox_driver.close()
 
     def test_second_task_locate_elements_on_webpage(self):
         global driver
-        driver.get("https://www.demoblaze.com/")
         get_wait = Wait(driver)
+        driver.get("https://www.demoblaze.com/")
 
         try:
             get_wait.wait_for_element(By.XPATH, '//a[@class="nav-link"][@href="index.html"]')
