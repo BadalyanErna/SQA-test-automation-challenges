@@ -5,13 +5,10 @@ from selenium.webdriver.support.select import Select
 
 from waits import Wait
 
-driver = webdriver.Chrome()
-
 
 class Tests:
 
-    def test_radiobutton(self):
-        global driver
+    def test_radiobutton(self, driver):
         driver = webdriver.Chrome()
         get_wait = Wait(driver)
         driver.get('https://courses.letskodeit.com/practice')
@@ -23,8 +20,7 @@ class Tests:
         assert not bmv_radiobutton.is_selected()
         assert not honda_radiobutton.is_selected()
 
-    def test_checkboxes(self):
-        global driver
+    def test_checkboxes(self, driver):
         driver = webdriver.Chrome()
         get_wait = Wait(driver)
         driver.get('https://courses.letskodeit.com/practice')
@@ -36,8 +32,7 @@ class Tests:
         assert not benz_checkbox.is_selected()
         assert bmw_checkbox.is_selected()
 
-    def test_dropdown(self):
-        global driver
+    def test_dropdown(self, driver):
         driver = webdriver.Chrome()
         get_wait = Wait(driver)
         driver.get('https://courses.letskodeit.com/practice')
@@ -46,8 +41,7 @@ class Tests:
         cars_select.select_by_value('honda')
         assert cars_select.first_selected_option.is_selected()
 
-    def test_multi_select(self):
-        global driver
+    def test_multi_select(self, driver):
         driver = webdriver.Chrome()
         get_wait = Wait(driver)
         driver.get('https://courses.letskodeit.com/practice')
@@ -58,8 +52,7 @@ class Tests:
         for fruit in fruits_select.all_selected_options:
             assert 'orange' not in fruits_select.all_selected_options
 
-    def test_enabled_disabled_placeholder(self):
-        global driver
+    def test_enabled_disabled_placeholder(self, driver):
         driver = webdriver.Chrome()
         get_wait = Wait(driver)
         driver.get('https://courses.letskodeit.com/practice')
@@ -74,8 +67,7 @@ class Tests:
                                                            'input[placeholder="Enabled/Disabled Field"][disabled]')
         assert not disabled_placeholder_element.is_enabled()
 
-    def test_hover_reload(self):
-        global driver
+    def test_hover_reload(self, driver):
         driver = webdriver.Chrome()
         get_wait = Wait(driver)
         driver.get('https://courses.letskodeit.com/practice')
@@ -89,4 +81,3 @@ class Tests:
         driver.find_element(By.ID, "multiple-select-example").click()
         assert not fruits_select.select_by_value('apple')
         assert not fruits_select.select_by_value('peach')
-

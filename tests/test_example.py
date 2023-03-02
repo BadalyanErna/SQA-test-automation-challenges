@@ -1,11 +1,8 @@
-from selenium import webdriver
 from selenium.common import NoSuchElementException
 from selenium.webdriver.common.by import By
 
 from waits import Wait
 from waits import get_driver
-
-driver = webdriver.Chrome()
 
 
 class Tests:
@@ -17,8 +14,7 @@ class Tests:
         firefox_driver.get('https://www.demoblaze.com/')
         firefox_driver.close()
 
-    def test_second_task_locate_elements_on_webpage(self):
-        global driver
+    def test_second_task_locate_elements_on_webpage(self, driver):
         driver.get("https://www.demoblaze.com/")
         get_wait = Wait(driver)
 
@@ -57,8 +53,7 @@ class Tests:
         except NoSuchElementException:
             print("No Such Element")
 
-    def test_third_task_categories_elements(self):
-        global driver
+    def test_third_task_categories_elements(self, driver):
         get_wait = Wait(driver)
         try:
             get_wait.wait_for_element(By.CSS_SELECTOR, '#itemc[onclick="byCat(\'phone\')"]')
@@ -76,9 +71,8 @@ class Tests:
         except NoSuchElementException:
             print("No Such Element")
 
-    def test_categories_section(self):
+    def test_categories_section(self, driver):
 
-        global driver
         get_wait = Wait(driver)
         phones = get_wait.wait_for_element(By.XPATH, '//a[@onclick="byCat(\'phone\')"]')
         phones.click()
