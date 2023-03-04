@@ -9,7 +9,6 @@ from waits import Wait
 class Tests:
 
     def test_radiobutton(self, driver):
-        driver = webdriver.Chrome()
         get_wait = Wait(driver)
         driver.get('https://courses.letskodeit.com/practice')
         benz_radiobutton = get_wait.wait_for_element(By.CSS_SELECTOR, 'input[id="benzradio"]')
@@ -21,7 +20,6 @@ class Tests:
         assert not honda_radiobutton.is_selected()
 
     def test_checkboxes(self, driver):
-        driver = webdriver.Chrome()
         get_wait = Wait(driver)
         driver.get('https://courses.letskodeit.com/practice')
         bmw_checkbox = get_wait.wait_for_element(By.CSS_SELECTOR, 'input[id="bmwcheck"]')
@@ -33,7 +31,6 @@ class Tests:
         assert bmw_checkbox.is_selected()
 
     def test_dropdown(self, driver):
-        driver = webdriver.Chrome()
         get_wait = Wait(driver)
         driver.get('https://courses.letskodeit.com/practice')
         cars = get_wait.wait_for_element(By.CSS_SELECTOR, 'select[id="carselect"]')
@@ -53,7 +50,6 @@ class Tests:
             assert 'orange' not in fruits_select.all_selected_options
 
     def test_enabled_disabled_placeholder(self, driver):
-        driver = webdriver.Chrome()
         get_wait = Wait(driver)
         driver.get('https://courses.letskodeit.com/practice')
         enabled_button = get_wait.wait_for_element(By.CSS_SELECTOR, 'input#enabled-button')
@@ -68,7 +64,6 @@ class Tests:
         assert not disabled_placeholder_element.is_enabled()
 
     def test_hover_reload(self, driver):
-        driver = webdriver.Chrome()
         get_wait = Wait(driver)
         driver.get('https://courses.letskodeit.com/practice')
         fruits = get_wait.wait_for_element(By.ID, "multiple-select-example")
